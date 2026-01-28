@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workload Balancer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>Workload Balancer</h1>
+
+    <div class="panel">
+      <div class="row">
+        <div class="label">Team members</div>
+        <input id="tmCount" type="number" min="1" value="2" />
+        <div class="label">Operations</div>
+        <input id="opCount" type="number" min="1" value="3" />
+        <button id="buildBtn">Build table</button>
+      </div>
+
+      <div class="hint">
+        Fill CT in seconds for each TM on operations they can do. Use 0 if TM cannot do that operation.
+      </div>
+
+      <div id="matrixWrap" class="matrixWrap"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Result for 900 seconds</h2>
+      <div id="summary" class="hint"></div>
+      <div id="result" class="resultGrid"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

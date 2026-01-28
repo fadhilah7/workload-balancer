@@ -163,7 +163,7 @@ th.stickyLeft, td.stickyLeft{
   border-radius: 10px;
 }
 
-/* ===== MOBILE RESPONSIVE FIX ===== */
+/* ===== MOBILE RESPONSIVE FIX (FINAL) ===== */
 @media (max-width: 768px){
 
   body{
@@ -199,25 +199,34 @@ th.stickyLeft, td.stickyLeft{
     margin-top: 6px;
   }
 
+  /* table harus bisa swipe */
   .matrixWrap{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-radius: 10px;
   }
 
+  /* jangan dipaksa min-width 100% */
   table{
-    min-width: 100%;
+    min-width: 760px;
     font-size: 12px;
   }
 
+  /* sticky column bikin ketutup di HP */
   th, td{
     padding: 8px;
+    position: static !important;
+  }
+  th.stickyLeft, td.stickyLeft{
+    position: static !important;
   }
 
   .opName{
-    width: 160px;
+    width: 220px;
   }
 
   .ctInput{
-    width: 100%;
+    width: 140px;
   }
 
   .resultGrid{
@@ -239,36 +248,5 @@ th.stickyLeft, td.stickyLeft{
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-  }
-}
-
-/* ===== EXTRA FIX FOR MOBILE TABLE CUT OFF ===== */
-@media (max-width: 768px){
-
-  /* bikin wrapper table bisa swipe horizontal */
-  .matrixWrap{
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* balikin table ke mode desktop width supaya bisa discroll */
-  table{
-    min-width: 760px;
-  }
-
-  /* sticky bikin ketutup di HP, jadi dimatiin */
-  th, td{
-    position: static !important;
-  }
-  th.stickyLeft, td.stickyLeft{
-    position: static !important;
-  }
-
-  /* cegah input ketekan */
-  .opName{
-    width: 220px;
-  }
-  .ctInput{
-    width: 140px;
   }
 }

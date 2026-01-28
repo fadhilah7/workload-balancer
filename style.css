@@ -241,3 +241,34 @@ th.stickyLeft, td.stickyLeft{
     gap: 4px;
   }
 }
+
+/* ===== EXTRA FIX FOR MOBILE TABLE CUT OFF ===== */
+@media (max-width: 768px){
+
+  /* bikin wrapper table bisa swipe horizontal */
+  .matrixWrap{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* balikin table ke mode desktop width supaya bisa discroll */
+  table{
+    min-width: 760px;
+  }
+
+  /* sticky bikin ketutup di HP, jadi dimatiin */
+  th, td{
+    position: static !important;
+  }
+  th.stickyLeft, td.stickyLeft{
+    position: static !important;
+  }
+
+  /* cegah input ketekan */
+  .opName{
+    width: 220px;
+  }
+  .ctInput{
+    width: 140px;
+  }
+}

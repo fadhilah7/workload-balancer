@@ -116,7 +116,7 @@ function calculate(){
 
   const opTotals = computeOpTotals(qty);
 
-  // For this mode, line output is the target U (no overproduction allowed)
+  // In this mode, we target exactly U pcs per operation (no overproduction)
   const lineOutput = U;
 
   // time and workload per TM (based on busiest TM)
@@ -259,23 +259,18 @@ function isFeasible(U){
 }
 
 /*
-  Minimize maximum workload with fixed output U and NO overproduction
-  - Each operation must sum to exactly U pcs (across all TMs)
-  - Greedy allocation: always assign next piece to the TM with the lowest current used time (workload)
-  - Respect each TM's remaining time in the 900s period
+  Build plan to produce exactly U pcs for EVERY operation (no overproduction),
+  while minimizing the maximum TM workload (balancing used time).
+
+  Greedy strategy (per piece):
+  - For each operation, assign next piece to TM with lowest current used time
+    (tie-break: smaller CT).
 */
 function buildPlanForUnits(U){
   const qty = Array.from({length:tmCount}, ()=>Array.from({length:opCount}, ()=>0));
   const used = Array.from({length:tmCount}, ()=>0);
 
-  // helper: current max workload time (for tie-breaking)
-  function currentMaxUsed(){
-    let m = 0;
-    for(const t of used) m = Math.max(m, t);
-    return m;
-  }
-
-  // build by tightness order (helps avoid dead ends)
+  // order operations by tightness to avoid dead ends
   const opsOrder = [];
   for(let j=0;j<opCount;j++){
     const caps = [];
@@ -291,7 +286,6 @@ function buildPlanForUnits(U){
   for(const item of opsOrder){
     const j = item.j;
 
-    // capable TMs for this operation
     const capable = [];
     for(let i=0;i<tmCount;i++){
       const ct = Number(matrix[i][j]) || 0;
@@ -299,21 +293,17 @@ function buildPlanForUnits(U){
     }
 
     let produced = 0;
-
     while(produced < U){
       let best = -1;
       let bestUsed = Infinity;
       let bestCt = Infinity;
 
-      // choose TM with lowest used time that can still fit one more piece
       for(const c of capable){
         const i = c.i;
         const ct = c.ct;
 
         if(used[i] + ct > PERIOD_SECONDS) continue;
 
-        // primary: minimize current used time (balance)
-        // secondary: smaller ct (prefer efficient among equally loaded)
         if(used[i] < bestUsed || (used[i] === bestUsed && ct < bestCt)){
           best = i;
           bestUsed = used[i];
@@ -321,10 +311,8 @@ function buildPlanForUnits(U){
         }
       }
 
-      // Should not happen if U is feasible, but keep safe
-      if(best === -1){
-        break;
-      }
+      // safety: should not happen when U is feasible
+      if(best === -1) break;
 
       qty[best][j] += 1;
       used[best] += Number(matrix[best][j]) || 0;

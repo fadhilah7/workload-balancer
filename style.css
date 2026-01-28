@@ -162,3 +162,82 @@ th.stickyLeft, td.stickyLeft{
   background:#f6f7f8;
   border-radius: 10px;
 }
+
+/* ===== MOBILE RESPONSIVE FIX ===== */
+@media (max-width: 768px){
+
+  body{
+    padding: 12px;
+  }
+
+  .app{
+    max-width: 100%;
+  }
+
+  h1{
+    font-size: 22px;
+  }
+
+  h2{
+    font-size: 18px;
+  }
+
+  .row{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .label{
+    width: 100%;
+  }
+
+  input, button{
+    width: 100%;
+  }
+
+  button{
+    margin-top: 6px;
+  }
+
+  .matrixWrap{
+    border-radius: 10px;
+  }
+
+  table{
+    min-width: 100%;
+    font-size: 12px;
+  }
+
+  th, td{
+    padding: 8px;
+  }
+
+  .opName{
+    width: 160px;
+  }
+
+  .ctInput{
+    width: 100%;
+  }
+
+  .resultGrid{
+    grid-template-columns: 1fr;
+  }
+
+  .cardTitle{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .badge{
+    margin-left: 0;
+    align-self: flex-start;
+  }
+
+  .pill{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
